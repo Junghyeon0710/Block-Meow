@@ -1,0 +1,71 @@
+@font-face {
+  font-family: 'NotoKR';
+  src: url('file:///C:/Windows/Fonts/NotoSansKR-VF.ttf') format('truetype');
+  font-weight: 100 900;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 900px; height: 964px; overflow: hidden; }
+body { font-family: 'NotoKR', 'Noto Sans KR', 'Malgun Gothic', sans-serif; -webkit-font-smoothing: antialiased; }
+
+.sheet { position: relative; width: 900px; height: 964px; }
+.sheet h1 { position: absolute; left: 40px; top: 24px; font-size: 19px; font-weight: 800; letter-spacing: -0.3px; }
+.sheet .desc { position: absolute; left: 40px; top: 52px; font-size: 13px; font-weight: 500; letter-spacing: -0.2px; }
+
+.screen { position: absolute; top: 92px; width: 390px; height: 844px; overflow: hidden; border-radius: 34px; }
+.screen.s1 { left: 40px; }
+.screen.s2 { left: 470px; }
+
+.ic { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; display: block; }
+.ic .f { fill: currentColor; stroke: none; }
+
+.statusbar { position: absolute; top: 0; left: 0; right: 0; height: 46px; display: flex; align-items: center; justify-content: space-between; padding: 6px 24px 0 34px; font-size: 15px; font-weight: 700; letter-spacing: -0.2px; z-index: 2; }
+.statusbar .sb-icons { display: flex; gap: 6px; align-items: center; }
+.statusbar svg { fill: currentColor; stroke: currentColor; }
+.statusbar svg rect[fill=none] { fill: none; }
+.homebar { position: absolute; left: 50%; bottom: 8px; width: 134px; height: 5px; margin-left: -67px; border-radius: 3px; z-index: 2; }
+
+/* ---------- home ---------- */
+.topbar { position: absolute; top: 54px; left: 20px; right: 20px; height: 40px; display: flex; align-items: center; justify-content: space-between; z-index: 2; }
+.iconbtn { width: 40px; height: 40px; display: grid; place-items: center; }
+.coins { height: 36px; display: flex; align-items: center; gap: 7px; padding: 0 5px 0 6px; font-weight: 800; font-size: 16px; }
+.coins .coin { width: 24px; height: 24px; border-radius: 50%; }
+.coins .plus { width: 26px; height: 26px; display: grid; place-items: center; }
+.logo { position: absolute; top: 112px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1; }
+.tagline { position: absolute; top: 214px; left: 0; right: 0; text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 3px; z-index: 1; }
+.cat { position: absolute; top: 236px; left: 50%; width: 200px; height: 204px; margin-left: -100px; z-index: 1; }
+.caption { position: absolute; top: 446px; left: 0; right: 0; text-align: center; font-size: 15px; font-weight: 600; letter-spacing: -0.2px; z-index: 1; }
+.btn { position: absolute; left: 24px; right: 24px; display: flex; align-items: center; justify-content: center; gap: 9px; font-weight: 800; letter-spacing: -0.3px; z-index: 1; }
+.btn.primary { top: 482px; height: 62px; font-size: 22px; }
+.btn.adv { top: 558px; height: 52px; font-size: 17px; }
+.row2 { position: absolute; top: 624px; left: 24px; right: 24px; height: 52px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; z-index: 1; }
+.row2 .btn { position: relative; left: auto; right: auto; top: auto; height: 52px; font-size: 15px; }
+.menu { position: absolute; top: 690px; left: 12px; right: 12px; height: 68px; display: grid; grid-template-columns: repeat(5, 1fr); z-index: 1; }
+.menu .item { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; position: relative; }
+.menu .tile { width: 46px; height: 46px; display: grid; place-items: center; }
+.menu .item .dot { top: -2px; left: 50%; margin-left: 15px; }
+.row2 .btn .dot { top: -4px; right: -3px; }
+.dot { position: absolute; width: 10px; height: 10px; border-radius: 50%; }
+.ad { position: absolute; left: 0; right: 0; top: 770px; height: 50px; display: flex; align-items: center; gap: 10px; padding: 0 18px; font-size: 12px; font-weight: 500; z-index: 1; }
+.adtag { font-size: 10px; font-weight: 800; padding: 2px 6px; letter-spacing: .5px; }
+
+/* ---------- game ---------- */
+.pause { position: absolute; top: 56px; left: 20px; z-index: 2; }
+.best { position: absolute; top: 58px; left: 0; right: 0; display: flex; justify-content: center; align-items: center; gap: 5px; font-size: 15px; font-weight: 800; z-index: 1; }
+.score { position: absolute; top: 76px; left: 0; right: 0; text-align: center; font-size: 46px; font-weight: 900; letter-spacing: -1.5px; line-height: 56px; z-index: 1; }
+.combo { position: absolute; top: 108px; left: 20px; height: 28px; padding: 0 11px; display: flex; align-items: center; font-size: 13px; font-weight: 800; z-index: 2; }
+.partner { position: absolute; top: 50px; right: 14px; width: 82px; height: 82px; z-index: 2; }
+.partner .ring { position: absolute; inset: 0; }
+.partner .ring circle { fill: none; }
+.partner .face { position: absolute; left: 12px; top: 12px; width: 58px; height: 58px; border-radius: 50%; overflow: hidden; }
+.partner .skill { position: absolute; left: -2px; bottom: -2px; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; }
+.partner .count { position: absolute; right: -4px; bottom: -2px; height: 20px; padding: 0 7px; font-size: 11px; font-weight: 800; display: flex; align-items: center; }
+.board { position: absolute; top: 152px; left: 23px; width: 344px; height: 344px; padding: 8px; display: grid; grid-template-columns: repeat(8, 1fr); grid-auto-rows: 1fr; gap: 4px; z-index: 1; }
+.board .cell { position: relative; }
+.tray { position: absolute; top: 516px; left: 23px; width: 344px; height: 118px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; z-index: 1; }
+.slot { display: grid; place-items: center; }
+.piece { display: grid; gap: 3px; }
+.piece .cell { width: 24px; height: 24px; }
+.piece .cell.ghost { visibility: hidden; }
+.boosters { position: absolute; top: 656px; left: 0; right: 0; display: flex; justify-content: center; gap: 42px; z-index: 1; }
+.boost { width: 62px; height: 62px; display: grid; place-items: center; position: relative; }
+.boost .count { position: absolute; top: -5px; right: -5px; width: 23px; height: 23px; display: grid; place-items: center; font-size: 12px; font-weight: 800; border-radius: 50%; }

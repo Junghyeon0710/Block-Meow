@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>블록냥 시안 B · 플랫 타일</title>
+<link rel="stylesheet" href="base.css">
+<style>
+  :root {
+    --bg: #FBF3E8; --ink: #3B3330; --soft: #A09489; --line: #E6D9C8; --white: #FFFFFF;
+    --coral: #EF6F5E; --coral-d: #C9584A; --sky: #5EA6E6; --sky-d: #3F83C2; --mustard: #F3B744; --mustard-d: #CF9530;
+    --sage: #69C29E; --sage-d: #4C9E7E; --lilac: #9F8CE3; --lilac-d: #7C6BC2;
+  }
+  body { background: #EFE7DC; color: var(--ink); }
+  .sheet .desc { color: #8C8178; }
+  .screen { background: var(--bg); color: var(--ink); box-shadow: 0 22px 44px -24px rgba(80,60,40,.45); }
+  .homebar { background: var(--ink); opacity: .85; }
+
+  .iconbtn, .coins, .menu .tile, .boost, .btn.half, .partner .count { background: var(--white); box-shadow: 0 4px 0 var(--line); }
+  .iconbtn { border-radius: 14px; }
+  .coins { border-radius: 18px; padding-left: 7px; }
+  .coins .coin { background: var(--mustard); box-shadow: inset 0 0 0 4px #F7CC6E, inset 0 -2px 0 4px var(--mustard-d); }
+  .coins .plus { background: var(--sage); color: var(--white); border-radius: 50%; }
+  .tagline { top: 220px; color: var(--soft); }
+  .caption { color: var(--soft); }
+  .caption b { color: var(--coral); }
+
+  .btn { border-radius: 18px; }
+  .btn.primary { background: var(--coral); color: var(--white); box-shadow: 0 5px 0 var(--coral-d); }
+  .btn.adv { background: var(--sky); color: var(--white); box-shadow: 0 5px 0 var(--sky-d); }
+  .btn.daily .ic { color: var(--coral); }
+  .btn.duel .ic { color: var(--mustard-d); }
+  .blocks rect { fill: var(--white); }
+  .blocks .b2, .blocks .b3 { fill: rgba(255,255,255,.6); }
+  .menu .tile { border-radius: 16px; }
+  .menu .item span { color: var(--soft); }
+  .dot { background: var(--coral); box-shadow: 0 0 0 2.5px var(--bg); }
+  .ad { background: var(--white); border-top: 1px solid var(--line); }
+  .adtag { background: #F1E8DC; color: var(--soft); border-radius: 4px; }
+  .adtext { color: var(--soft); }
+
+  .best { color: var(--soft); }
+  .best .ic { color: var(--mustard); }
+  .combo { background: var(--mustard); color: var(--white); border-radius: 14px; box-shadow: 0 3px 0 var(--mustard-d); }
+  .partner .track { stroke: #EBDDCB; stroke-width: 8; }
+  .partner .prog { stroke: var(--coral); stroke-width: 8; stroke-linecap: round; }
+  .partner .face { left: 15px; top: 15px; width: 52px; height: 52px; background: var(--white); }
+  .partner .face svg { margin: -3px 0 0 -3px; }
+  .partner .skill { background: var(--sky); color: var(--white); box-shadow: 0 0 0 3px var(--bg); }
+  .partner .count { border-radius: 10px; color: var(--ink); }
+
+  .board { background: #F1E5D5; border-radius: 22px; padding: 9px; gap: 5px; }
+  .cell { border-radius: 8px; }
+  .cell.c0 { background: #E7D8C5; }
+  .cell.c1 { background: var(--coral); box-shadow: inset 0 -4px 0 var(--coral-d); }
+  .cell.c2 { background: var(--sky); box-shadow: inset 0 -4px 0 var(--sky-d); }
+  .cell.c3 { background: var(--mustard); box-shadow: inset 0 -4px 0 var(--mustard-d); }
+  .cell.c4 { background: var(--sage); box-shadow: inset 0 -4px 0 var(--sage-d); }
+  .cell.c5 { background: var(--lilac); box-shadow: inset 0 -4px 0 var(--lilac-d); }
+  .tray { background: #F4EADD; border-radius: 22px; padding: 0 6px; }
+  .piece .cell { border-radius: 6px; }
+  .piece .cell.c1, .piece .cell.c3, .piece .cell.c5 { box-shadow: inset 0 -3px 0 rgba(0,0,0,.16); }
+  .boost { border-radius: 50%; box-shadow: 0 5px 0 var(--line); }
+  .boost .count { background: var(--coral); color: var(--white); box-shadow: 0 0 0 2.5px var(--bg); }
+</style>
+</head>
+<body>
+<script src="mock.js"></script>
+<script>
+  const tiles = [['#EF6F5E', '#C9584A'], ['#F3B744', '#CF9530'], ['#69C29E', '#4C9E7E']];
+  window.T = {
+    title: 'B · 플랫 타일',
+    desc: '크림 바탕에 무광 타일 — 입체는 아래쪽 두께 한 줄로만 표현. 다섯 가지 블록 색과 먹색 글자만 사용.',
+    cat: 'flat',
+    catColors: { fur: '#F29A4A', stripe: '#D9772E', cream: '#FFF6EA', pink: '#F5AFA0', nose: '#E9796B', ink: '#3B3330', shadow: 'rgba(59,51,48,.08)' },
+    tagline: 'BLOCK MEOW',
+    logo: () => logoSVG({
+      unit: 8, gap: 0, pad: 4,
+      unitFn: (x, y, u, si) => `<rect x="${x}" y="${y + 3}" width="${u}" height="${u}" fill="${tiles[si][1]}"/><rect x="${x}" y="${y}" width="${u}" height="${u}" fill="${tiles[si][0]}"/>`,
+    }),
+  };
+  render();
+</script>
+</body>
+</html>

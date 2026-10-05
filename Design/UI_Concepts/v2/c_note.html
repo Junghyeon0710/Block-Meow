@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>블록냥 시안 C · 모눈 노트</title>
+<link rel="stylesheet" href="base.css">
+<style>
+  :root {
+    --paper: #FDFCF7; --card: #FFFEFA; --ink: #2C3A6B; --pencil: #8E97AC;
+    --hl-yellow: #FFE45C; --hl-pink: #FF8FC8; --hl-blue: #7CCBFF; --hl-green: #9BE58F; --hl-orange: #FFB061;
+  }
+  body { background: #E7E4DA; color: var(--ink); }
+  .sheet .desc { color: #7A776E; }
+  .screen {
+    background-color: var(--paper); color: var(--ink);
+    background-image: linear-gradient(rgba(96,150,205,.2) 1px, transparent 1px), linear-gradient(90deg, rgba(96,150,205,.2) 1px, transparent 1px);
+    background-size: 16px 16px; background-position: -1px 7px;
+    box-shadow: 0 22px 44px -24px rgba(60,60,40,.4);
+  }
+  .homebar { background: var(--ink); opacity: .8; }
+
+  /* hand-drawn outline + highlighter fill, as layers so the text itself stays crisp */
+  .coins, .menu .tile, .topbar .iconbtn { position: relative; }
+  .hd::before, .hd::after { content: ""; position: absolute; pointer-events: none; }
+  .hd::after { inset: 0; border: 2.3px solid var(--ink); border-radius: 12px; filter: url(#rough); }
+  .hd::before { inset: 5px -3px 2px 4px; border-radius: 7px; mix-blend-mode: multiply; transform: rotate(-1.2deg); z-index: -1; }
+
+  .iconbtn::after { border-radius: 50%; }
+  .coins::after { border-radius: 20px; }
+  .coins .coin { background: var(--hl-yellow); box-shadow: 0 0 0 2px var(--ink); filter: url(#rough); }
+  .coins .plus { color: var(--ink); }
+  .tagline { top: 222px; color: var(--pencil); }
+  .caption b { background: linear-gradient(transparent 55%, var(--hl-yellow) 55%, var(--hl-yellow) 92%, transparent 92%); }
+
+  .btn { z-index: 1; }
+  .btn.primary::before { background: var(--hl-yellow); }
+  .btn.adv::before { background: var(--hl-pink); transform: rotate(.8deg); }
+  .btn.daily::before { background: var(--hl-blue); }
+  .btn.duel::before { background: var(--hl-green); transform: rotate(1deg); }
+  .btn.primary::after { border-width: 2.8px; border-radius: 14px; }
+  .blocks rect { stroke: var(--ink); stroke-width: 1.6; filter: url(#rough); }
+  .blocks .b1 { fill: var(--hl-pink); } .blocks .b2 { fill: var(--hl-blue); } .blocks .b3 { fill: var(--hl-green); } .blocks .b4 { fill: var(--hl-orange); }
+  .menu .tile::after { border-radius: 50%; }
+  .menu .item:nth-child(1) .tile::before { background: var(--hl-pink); }
+  .menu .item:nth-child(3) .tile::before { background: var(--hl-yellow); }
+  .menu .item:nth-child(5) .tile::before { background: var(--hl-orange); }
+  .menu .tile::before { inset: 6px 3px 3px 6px; border-radius: 50%; }
+  .dot { width: 11px; height: 11px; background: #E5484D; filter: url(#rough); }
+  .ad::after { inset: 4px 12px; border: 2px dashed var(--pencil); border-radius: 8px; }
+  .ad { padding: 0 26px; }
+  .adtag { color: var(--ink); border: 1.8px solid var(--ink); border-radius: 50%; padding: 3px 5px; filter: url(#rough); }
+  .adtext { color: var(--pencil); }
+
+  .best .ic { color: var(--ink); }
+  .score { z-index: 1; }
+  .score span { position: relative; }
+  .score span::before { content: ""; position: absolute; left: -10px; right: -12px; top: 30px; height: 20px; background: var(--hl-yellow); transform: rotate(-1.5deg); mix-blend-mode: multiply; z-index: -1; }
+  .combo { padding: 0 12px; background: #FFF08A; transform: rotate(-5deg); box-shadow: 1px 2px 0 rgba(44,58,107,.18); border-radius: 2px; }
+  .combo::before { content: ""; position: absolute; left: 50%; top: -7px; width: 30px; height: 12px; margin-left: -15px; background: rgba(205,210,215,.75); transform: rotate(4deg); }
+  .partner .track { stroke: var(--ink); stroke-width: 2.2; filter: url(#rough); }
+  .partner .prog { stroke: var(--hl-pink); stroke-width: 9; mix-blend-mode: multiply; }
+  .partner .face { left: 14px; top: 14px; width: 54px; height: 54px; background: var(--card); box-shadow: 0 0 0 2px var(--ink); filter: url(#rough); }
+  .partner .face svg { margin: -4px 0 0 -4px; }
+  .partner .skill { background: var(--hl-blue); box-shadow: 0 0 0 2px var(--ink); color: var(--ink); }
+  .partner .count { background: var(--card); border: 1.8px solid var(--ink); border-radius: 4px; transform: rotate(3deg); }
+
+  .board { background: var(--card); padding: 7px; gap: 3px; }
+  .board::after { content: ""; position: absolute; inset: 0; border: 2.8px solid var(--ink); border-radius: 6px; filter: url(#rough); pointer-events: none; }
+  .cell::before, .cell::after { content: ""; position: absolute; }
+  .cell.c0::after { inset: 0; border: 1.3px solid var(--pencil); border-radius: 3px; filter: url(#rough); opacity: .65; }
+  .cell:not(.c0)::after { inset: 0; border: 2.2px solid var(--ink); border-radius: 4px; filter: url(#rough); }
+  .cell:not(.c0)::before { inset: 3px 1px 1px 3px; border-radius: 3px; mix-blend-mode: multiply; }
+  .cell.c1::before { background: var(--hl-pink); } .cell.c2::before { background: var(--hl-blue); } .cell.c3::before { background: var(--hl-yellow); }
+  .cell.c4::before { background: var(--hl-green); } .cell.c5::before { background: var(--hl-orange); }
+  .board .cell:nth-child(3n)::before { transform: rotate(2deg); }
+  .board .cell:nth-child(4n+1)::before { transform: rotate(-2deg); }
+  .tray .slot { position: relative; }
+  .piece .cell { position: relative; }
+  .tray .slot:not(:last-child)::after { content: ""; position: absolute; right: -6px; top: 22px; bottom: 22px; border-right: 1.6px dashed var(--pencil); }
+  .boost::after { border-radius: 50%; border-width: 2.4px; }
+  .boost .count { background: var(--hl-pink); color: var(--ink); box-shadow: 0 0 0 1.8px var(--ink); filter: url(#rough); }
+</style>
+</head>
+<body>
+<script src="mock.js"></script>
+<script>
+  const marker = ['#FF6FB1', '#4FB6F0', '#FF9F40'];
+  window.T = {
+    title: 'C · 모눈 노트',
+    desc: '모눈종이에 볼펜으로 그리고 형광펜으로 칠한 낙서장 — 떨리는 손선, 칸 밖으로 삐져나온 색, 테이프 붙인 메모.',
+    cat: 'doodle',
+    catColors: { fur: '#FFAE57', pink: '#FF9ECF', paper: '#FFFEFA', ink: '#2C3A6B' },
+    defs: `<svg width="0" height="0" style="position:absolute"><filter id="rough" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/></filter></svg>`,
+    logo: () => logoSVG({
+      unit: 8, gap: 0, pad: 6,
+      wrap: out => `<g filter="url(#rough)" style="mix-blend-mode:multiply">${out}</g>`,
+      unitFn: (x, y, u, si) => `<rect x="${x - .4}" y="${y - .4}" width="${u + .8}" height="${u + .8}" fill="${marker[si]}" opacity=".92"/>`,
+    }),
+  };
+  render();
+  // hand-drawn outlines on the interactive pieces
+  document.querySelectorAll('.iconbtn, .coins, .btn, .menu .tile, .boost, .ad').forEach(el => el.classList.add('hd'));
+  // the score gets a highlighter swipe behind the digits
+  const sc = document.querySelector('.score'); sc.innerHTML = `<span>${sc.textContent}</span>`;
+  // logo underline scribble
+  document.querySelector('.logo').insertAdjacentHTML('beforeend', `<svg style="position:absolute;top:108px;left:50%;margin-left:-118px" width="236" height="16" viewBox="0 0 236 16"><path d="M4 9 C 50 3, 110 13, 160 6 S 220 8, 232 5" fill="none" stroke="#2C3A6B" stroke-width="2.6" stroke-linecap="round" filter="url(#rough)"/></svg>`);
+</script>
+</body>
+</html>
